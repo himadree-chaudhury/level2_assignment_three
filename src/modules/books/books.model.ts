@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose";
+import { Model, model, Schema } from "mongoose";
 import { IBook } from "./books.interface";
 
 const bookSchema = new Schema<IBook>(
@@ -32,7 +32,11 @@ const bookSchema = new Schema<IBook>(
       immutable: true,
     },
     description: { type: String },
-    copies: { type: Number, required: [true, "Copies are required"], min: 0 },
+    copies: {
+      type: Number,
+      required: [true, "Copies are required"],
+      min: [0, "Copies must be a positive number"],
+    },
     available: {
       type: Boolean,
       required: [true, "Availability is required"],
@@ -45,6 +49,10 @@ const bookSchema = new Schema<IBook>(
   }
 );
 
-const Book = model<IBook>("Book", bookSchema);
+bookSchema.methods.checkAvailability = function (quantity: number): boolean {
+  return this.copies >= quantity;
+};
+
+const Book: Model<IBook> = model<IBook>("Book", bookSchema);
 
 export default Book;
