@@ -1,5 +1,5 @@
 import { Model, model, Schema } from "mongoose";
-import { IBook } from "./books.interface";
+import { IBook, IBookMethod } from "./books.interface";
 
 const bookSchema = new Schema<IBook>(
   {
@@ -30,16 +30,20 @@ const bookSchema = new Schema<IBook>(
       required: [true, "ISBN is required"],
       unique: [true, "ISBN must be unique"],
       immutable: true,
+      trim: true,
     },
-    description: { type: String },
+    description: { type: String, trim: true },
     copies: {
       type: Number,
       required: [true, "Copies are required"],
       min: [0, "Copies must be a positive number"],
+      validate: {
+        validator: Number.isInteger,
+        message: "Copies must be an integer value",
+      },
     },
     available: {
       type: Boolean,
-      required: [true, "Availability is required"],
       default: true,
     },
   },
@@ -49,10 +53,16 @@ const bookSchema = new Schema<IBook>(
   }
 );
 
-bookSchema.methods.checkAvailability = function (quantity: number): boolean {
-  return this.copies >= quantity;
+// *Instance method to update availability
+
+bookSchema.methods.updateAvailability = async function (
+  this: IBookMethod
+): Promise<void> {
+  this.available = this.copies > 0;
+  await this.save();
 };
+
 
 const Book: Model<IBook> = model<IBook>("Book", bookSchema);
 
-export default Book;
+export { Book, bookSchema };

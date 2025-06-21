@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import Book from "./books.model";
+import {Book} from "./books.model";
 
 const createBook = async (req: Request, res: Response) => {
   const payload = req.body;
@@ -28,7 +28,7 @@ const getAllBooks = async (req: Request, res: Response) => {
   const filter = req.query.filter;
   const sortBy = req.query.sortBy;
   const sort = req.query.sort;
-  const limit = req.query.limit;
+  const limit = req.query.limit || 10;
 
   const query: any = {};
 

@@ -1,11 +1,22 @@
 import { Request, Response } from "express";
 import { Borrow } from "./borrows.model";
+import { Book } from "../books/books.model";
 
 const createBorrow = async (req: Request, res: Response) => {
   const payload = req.body;
+
+  const book = await Book.findById(payload.book);
   try {
-    const borrowData = await new Borrow(payload).save();
+    const borrowData = new Borrow(payload);
+    await borrowData.save();
+
     if (borrowData) {
+      // *Update book copies and availability
+      if (book) {
+        book.copies -= payload.quantity;
+        await book.updateAvailability();
+      }
+
       res.status(201).send({
         success: true,
         message: "Book borrowed successfully",

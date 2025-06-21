@@ -1,3 +1,5 @@
+import { Document } from "mongoose";
+
 export interface IBook {
   title: string;
   author: string;
@@ -12,5 +14,8 @@ export interface IBook {
   description?: string;
   copies: number;
   available: boolean;
-  checkAvailability(quantity: number): boolean;
+}
+
+export interface IBookMethod extends IBook, Document {
+  updateAvailability(): Promise<void>;
 }
