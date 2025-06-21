@@ -15,15 +15,15 @@ app.use(express.json());
 app.use(cors());
 
 // *Routes
+app.get("/", (req, res) => {
+  res.send("Welcome to the library management app!");
+});
+
 app.use(booksRoute);
 app.use(borrowsRoute);
 
 // *Error handling middleware
 app.use(notFound);
 app.use(errorHandler);
-
-app.get("/", (req, res) => {
-  res.send("Welcome to the library management app!");
-});
 
 export default app;

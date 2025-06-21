@@ -22,7 +22,6 @@ const createBook = async (req: Request, res: Response) => {
         name: error.name,
       },
     });
-    console.log(error.name);
   }
 };
 

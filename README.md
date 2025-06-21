@@ -12,13 +12,14 @@ A RESTful API for managing a library system built with Express, TypeScript, and 
 2. **Installation**
    ```bash
    git clone <repository-url>
-   cd library-management-api
+   cd level2_assignment_three
    npm install
    ```
 
 3. **Environment Variables**
    Create a `.env` file in the root directory:
    ```
+   NODE_ENV=development
    MONGODB_URI=mongodb://localhost:27017/library
    PORT=3000
    ```
@@ -68,6 +69,7 @@ All endpoints return errors in the following format:
 
 ## Dependencies
 - express
+- cors
 - mongoose
 - typescript
 - dotenv

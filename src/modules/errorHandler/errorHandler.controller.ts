@@ -2,8 +2,6 @@
 import { Request, Response } from "express";
 
 export const errorHandler = (error: any, req: Request, res: Response) => {
-  console.error("Error:", error);
-
   res.status(500).send({
     success: false,
     message: "Internal server error",

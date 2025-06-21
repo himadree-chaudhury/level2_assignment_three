@@ -7,12 +7,31 @@ import { Book } from "../books/books.model";
 const createBorrow = async (req: Request, res: Response) => {
   const payload = req.body;
 
-  const book = await Book.findById(payload.book);
   try {
+    const book = await Book.findById(payload.book);
+
+    // *Validate book data
+    if (!book) {
+      res.status(404).send({
+        success: false,
+        message: "Book not found",
+      });
+      return;
+    }
+    if (book?.copies < payload.quantity) {
+      {
+        res.status(400).send({
+          success: false,
+          message: "Not enough copies available",
+        });
+      }
+      return;
+    }
+
     const borrowData = new Borrow(payload);
-    await borrowData.save();
 
     if (borrowData) {
+      await borrowData.save();
       // *Update book copies and availability
       if (book) {
         book.copies -= payload.quantity;
@@ -34,7 +53,6 @@ const createBorrow = async (req: Request, res: Response) => {
         message: error.message,
       },
     });
-    console.log(error.name);
   }
 };
 
@@ -92,7 +110,6 @@ const getAllBorrows = async (req: Request, res: Response) => {
         message: error.message,
       },
     });
-    console.log(error.name);
   }
 };
 
