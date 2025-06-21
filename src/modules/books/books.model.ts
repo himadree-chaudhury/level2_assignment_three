@@ -36,7 +36,7 @@ const bookSchema = new Schema<IBookMethod>(
     copies: {
       type: Number,
       required: [true, "Copies are required"],
-      min: [0, "Copies must be a positive number"],
+      min: [1, "Copies must be a positive number & greater than 0"],
       validate: {
         validator: Number.isInteger,
         message: "Copies must be an integer value",
