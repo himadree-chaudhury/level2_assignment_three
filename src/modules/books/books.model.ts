@@ -1,7 +1,7 @@
-import { Model, model, Schema } from "mongoose";
-import { IBook, IBookMethod } from "./books.interface";
+import { model, Schema } from "mongoose";
+import { IBookMethod } from "./books.interface";
 
-const bookSchema = new Schema<IBook>(
+const bookSchema = new Schema<IBookMethod>(
   {
     title: { type: String, required: [true, "Title is required"], trim: true },
     author: {
@@ -62,7 +62,6 @@ bookSchema.methods.updateAvailability = async function (
   await this.save();
 };
 
-
-const Book: Model<IBook> = model<IBook>("Book", bookSchema);
+const Book = model<IBookMethod>("Book", bookSchema);
 
 export { Book, bookSchema };

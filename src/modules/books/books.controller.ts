@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response } from "express";
 import {Book} from "./books.model";
 
+// *Create a book
 const createBook = async (req: Request, res: Response) => {
   const payload = req.body;
   try {
@@ -24,7 +26,9 @@ const createBook = async (req: Request, res: Response) => {
   }
 };
 
+// *Get all books with optional filters and sorting
 const getAllBooks = async (req: Request, res: Response) => {
+  // *Extract query parameters for filtering and sorting
   const filter = req.query.filter;
   const sortBy = req.query.sortBy;
   const sort = req.query.sort;
@@ -59,6 +63,7 @@ const getAllBooks = async (req: Request, res: Response) => {
   }
 };
 
+// *Get a book by ID
 const getBookById = async (req: Request, res: Response) => {
   const bookId = req.params.bookId;
   if (!bookId) {
@@ -94,6 +99,7 @@ const getBookById = async (req: Request, res: Response) => {
   }
 };
 
+// *Update a book by ID
 const updateBook = async (req: Request, res: Response) => {
   const bookId = req.params.bookId;
   if (!bookId) {
@@ -131,6 +137,7 @@ const updateBook = async (req: Request, res: Response) => {
   }
 };
 
+// *Delete a book by ID
 const deleteBook = async (req: Request, res: Response) => {
   const bookId = req.params.bookId;
   if (!bookId) {

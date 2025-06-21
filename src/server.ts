@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import config from "./config";
 import app from "./app";
 
+// *Server function to connect to the database and start the server
 async function server() {
   try {
     await mongoose.connect(config.dbUrl as string);
@@ -13,4 +14,5 @@ async function server() {
     console.log(error);
   }
 }
+
 server();

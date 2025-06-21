@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response } from "express";
 import { Borrow } from "./borrows.model";
 import { Book } from "../books/books.model";
 
+// *Create a borrow
 const createBorrow = async (req: Request, res: Response) => {
   const payload = req.body;
 
@@ -36,6 +38,7 @@ const createBorrow = async (req: Request, res: Response) => {
   }
 };
 
+// *Get all borrows with summary
 const getAllBorrows = async (req: Request, res: Response) => {
   try {
     const summary = await Borrow.aggregate([

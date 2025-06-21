@@ -9,6 +9,7 @@ import {
 
 const booksRoute = Router();
 
+// *Routes for book management
 booksRoute.post("/api/books", createBook);
 booksRoute.get("/api/books", getAllBooks);
 booksRoute.get("/api/books/:bookId", getBookById);
