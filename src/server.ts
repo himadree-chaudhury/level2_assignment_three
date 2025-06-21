@@ -1,13 +1,15 @@
 import express from 'express';
+import cors from 'cors';
 import mongoose from 'mongoose';
 import config from './config';
 
 const app = express();
 
 app.use(express.json());
+app.use(cors())
 
-app.get('/', (req, res) => {
-    res.send('Hello World!');
+app.get('/api', (req , res) => {
+    res.send('Welcome to the library management app!');
 });
 
 app.listen(config.port, () => {
